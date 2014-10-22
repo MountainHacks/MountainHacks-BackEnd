@@ -1,22 +1,14 @@
 __author__ = 'Derek Argueta'
 __email__  = 'derek@mountainhacks.com'
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from MountainHacks import secrets
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o=@9zxh%t7%7&p@7k0a1(#expete%@b0jy+k!^o3!7i$x0jax*'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = secrets.SECRET_KEY
 DEBUG = True
-
 TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -55,13 +47,8 @@ DATABASES = {
 }
 
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'US/Mountain'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 STATIC_URL = '/static/'
