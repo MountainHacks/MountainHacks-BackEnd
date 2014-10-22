@@ -1,5 +1,16 @@
+# .pyc files
 *.pyc
+api/*.pyc
+MountainHacks/*.pyc
+
+# OSX file
 .DS_Store
+
+# JetBrains IDE files
 .idea/
-db.sqlite3
+
+# The database b/c too lazy to set up postgreSQL
+*.sqlite3
+
+# sssssshhhhhhhhhh you didn't see anything.....
 MountainHacks/secrets.py
