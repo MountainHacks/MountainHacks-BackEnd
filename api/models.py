@@ -31,12 +31,29 @@ class Student(models.Model):
         (FEMALE, 'Female'),
     )
 
+    FRESHMAN = 'FR'
+    SOPHOMORE = 'SO'
+    JUNIOR = 'JR'
+    SENIOR = 'SR'
+    HIGH_SCHOOL = 'HS'
+    GRAD_STUDENT = 'GS'
+    GRADES = (
+        (FRESHMAN, 'Freshman'),
+        (SOPHOMORE, 'Sophomore'),
+        (JUNIOR, 'Junior'),
+        (SENIOR, 'Senior'),
+        (HIGH_SCHOOL, 'High School'),
+        (GRAD_STUDENT, 'Graduate Student')
+    )
+
     first_name = models.CharField('First Name', max_length=75)
     last_name = models.CharField('Last Name', max_length=100)
     major = models.CharField('Major', max_length=50)
     gender = models.CharField('Gender', max_length=1, choices=GENDERS)
     email = models.EmailField('Email', max_length=175)
     school = models.CharField('School', max_length=200)
+    grade = models.CharField('Grade', max_length=75, choices=GRADES)
+    first_hackathon = models.BooleanField('First Hackathon')
     github_handle = models.CharField('Github Handle', max_length=50)
     linkedin_link = models.URLField('LinkedIn Link')
     shirt_size = models.CharField('Shirt Size', max_length=3, choices=SHIRT_SIZES)
