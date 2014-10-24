@@ -3,7 +3,7 @@ __email__  = 'derek@mountainhacks.com'
 
 import os
 from MountainHacks import secrets
-#import dj_database_url
+import dj_database_url
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -45,15 +45,15 @@ ROOT_URLCONF = 'MountainHacks.urls'
 
 WSGI_APPLICATION = 'MountainHacks.wsgi.application'
 
-# DATABASES = {}
-# DATABASES['default'] =  dj_database_url.config()
+DATABASES = {}
+DATABASES['default'] =  dj_database_url.config()
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'US/Mountain'
