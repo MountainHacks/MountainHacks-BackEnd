@@ -3,7 +3,7 @@ __email__  = 'derek@mountainhacks.com'
 
 import os
 from MountainHacks import secrets
-import dj_database_url
+#import dj_database_url
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -12,7 +12,7 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ALLOWED_HOSTS = ['*']
 
