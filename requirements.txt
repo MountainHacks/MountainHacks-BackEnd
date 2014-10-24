@@ -2,3 +2,4 @@ django==1.6
 djangorestframework==2.4.3
 south==1.0
 django-localflavor==1.0
+gunicorn==19.1.1

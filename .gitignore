@@ -13,4 +13,4 @@ MountainHacks/*.pyc
 *.sqlite3
 
 # sssssshhhhhhhhhh you didn't see anything.....
-MountainHacks/secrets.py
+#MountainHacks/secrets.py
