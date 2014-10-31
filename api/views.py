@@ -76,6 +76,16 @@ def registration_submission(request):
         linkedin = post.get('linkedin')
         first = post.get('first')
 
+        if out_of_state == "Yes":
+            out_of_state = True
+        else:
+            out_of_state = False
+
+        if first == "Yes":
+            first = True
+        else:
+            first = False
+
         student = Student(first_name=first_name,
                           last_name=last_name,
                           major=major,
