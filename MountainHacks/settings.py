@@ -48,9 +48,6 @@ ROOT_URLCONF = 'MountainHacks.urls'
 
 WSGI_APPLICATION = 'MountainHacks.wsgi.application'
 
-#DATABASES = {}
-#DATABASES['default'] =  dj_database_url.config()
-
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.sqlite3',
@@ -64,8 +61,6 @@ TIME_ZONE = 'US/Mountain'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-#STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
 
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
@@ -101,10 +96,11 @@ STATIC_URL = '/static/'
 #         },
 #     },
 #     'loggers': {
-#         'log_request_id.middleware': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#             'propagate': False,
-#         },
-#     }
-# }
+#         'log_request_id.middleware'
+STATIC_ROOT = '/home/darguetap/webapps/mountainhacks_static/'
+STATIC_URL = '/static/'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
