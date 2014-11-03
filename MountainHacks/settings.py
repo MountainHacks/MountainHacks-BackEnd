@@ -10,7 +10,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = secrets.SECRET_KEY
 DEBUG = True
 TEMPLATE_DEBUG = True
-CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+    'mountainhacks.com',
+    'localhost:9000'
+)
+
+CORS_ALLOW_METHODS = ('POST')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
