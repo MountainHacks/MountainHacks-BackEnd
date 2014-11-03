@@ -54,9 +54,6 @@ ROOT_URLCONF = 'MountainHacks.urls'
 
 WSGI_APPLICATION = 'MountainHacks.wsgi.application'
 
-#DATABASES = {}
-#DATABASES['default'] =  dj_database_url.config()
-
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.sqlite3',
