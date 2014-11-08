@@ -63,6 +63,14 @@ class Student(models.Model):
     shirt_size = models.CharField('Shirt Size', max_length=3, choices=SHIRT_SIZES)
     out_of_state = models.BooleanField('Out-of-State')
 
+    class Meta:
+        verbose_name = 'Student'
+        verbose_name_plural = 'Students'
+        ordering = ['id']
+
+    def __unicode__(self):
+        return '%s %s -- %s' % (self.first_name, self.last_name, self.school)
+
 class Company(models.Model):
 
     name = models.CharField('Company Name', max_length=100)
