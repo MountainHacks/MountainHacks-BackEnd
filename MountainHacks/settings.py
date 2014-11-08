@@ -16,6 +16,16 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:9000'
 )
 
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'X-MOUNTAINHACKS'
+)
+
 CORS_ALLOW_METHODS = ('POST')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
@@ -62,6 +72,11 @@ DATABASES = {
  }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = secrets.EMAIL_USER
+EMAIL_HOST_PASSWORD = secrets.EMAIL_PASSWORD
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'US/Mountain'
 USE_I18N = True

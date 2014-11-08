@@ -1,13 +1,15 @@
 __author__ = 'Derek Argueta'
 __email__  = 'derek@mountainhacks.com'
 
-from api.models import Student, Company
+from api.models import Student, Company, SessionToken
 from api.serializers import StudentSerializer, CompanySerializer
 
 from django.http import HttpResponse
 from django.core import mail
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
+from api.tokens import TokenGenerator
+from rest_framework.exceptions import PermissionDenied
 
 class StudentListView(generics.ListCreateAPIView):
     """ Returns a list of serialized Student objects in JSON format.
@@ -18,6 +20,19 @@ class StudentListView(generics.ListCreateAPIView):
 
     model = Student
     serializer_class = StudentSerializer
+
+    def get(self, request, *args, **kwargs):
+        token = request.META.get('HTTP_X_MOUNTAINHACKS')
+        if not token:
+            print "no token"
+            raise PermissionDenied({"message":"You don't have permission to access"})
+        try:
+            tokobj = SessionToken.objects.get(val=token)
+            tokobj.delete()
+            return super(StudentListView, self).get(request, *args, **kwargs)
+        except SessionToken.DoesNotExist:
+            print "token does not exist"
+            raise PermissionDenied({"message":"You don't have permission to access"})
 
 
 class StudentInstanceView(generics.RetrieveUpdateDestroyAPIView):
@@ -31,6 +46,21 @@ class StudentInstanceView(generics.RetrieveUpdateDestroyAPIView):
 
     model = Student
     serializer_class = StudentSerializer
+
+    def get(self, request, *args, **kwargs):
+        for k,v in request.META.iteritems():
+            print str(k) + "           " + str(v)
+        token = request.META.get('HTTP_X_MOUNTAINHACKS')
+        if not token:
+            print "no token"
+            raise PermissionDenied({"message":"You don't have permission to access"})
+        try:
+            tokobj = SessionToken.objects.get(val=token)
+            tokobj.delete()
+            return super(StudentInstanceView, self).get(request, *args, **kwargs)
+        except SessionToken.DoesNotExist:
+            print "token does not exist"
+            raise PermissionDenied({"message":"You don't have permission to access"})
 
 
 class CompanyListView(generics.ListCreateAPIView):
@@ -56,9 +86,23 @@ class CompanyInstanceView(generics.RetrieveUpdateDestroyAPIView):
     model = Company
     serializer_class = CompanySerializer
 
+def get_token(request):
+    return HttpResponse(TokenGenerator.get_token())
+
 
 @csrf_exempt
 def registration_submission(request):
+
+        token = request.META.get('HTTP_X_MOUNTAINHACKS')
+        if not token:
+            print "no token"
+            raise PermissionDenied({"message":"You don't have permission to access"})
+        try:
+            tokobj = SessionToken.objects.get(val=token)
+            tokobj.delete()
+        except SessionToken.DoesNotExist:
+            print "token does not exist"
+            raise PermissionDenied({"message":"You don't have permission to access"})
 
         post = request.POST
 

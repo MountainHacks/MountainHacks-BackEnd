@@ -9,6 +9,10 @@ from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["^localflavor\.us\.models\.USStateField"])
 add_introspection_rules([], ["^localflavor\.us\.models\.PhoneNumberField"])
 
+class SessionToken(models.Model):
+
+    val = models.CharField('Value', max_length=100)
+
 class Student(models.Model):
 
     EXTRA_SMALL = 'XS'
