@@ -35,34 +35,6 @@ class StudentListView(generics.ListCreateAPIView):
             raise PermissionDenied({"message":"You don't have permission to access"})
 
 
-class StudentInstanceView(generics.RetrieveUpdateDestroyAPIView):
-    """ Returns a single serialized Student object in JSON format.
-    Allows:
-        GET
-        PUT
-        PATCH
-        DELETE
-    """
-
-    model = Student
-    serializer_class = StudentSerializer
-
-    def get(self, request, *args, **kwargs):
-        for k,v in request.META.iteritems():
-            print str(k) + "           " + str(v)
-        token = request.META.get('HTTP_X_MOUNTAINHACKS')
-        if not token:
-            print "no token"
-            raise PermissionDenied({"message":"You don't have permission to access"})
-        try:
-            tokobj = SessionToken.objects.get(val=token)
-            tokobj.delete()
-            return super(StudentInstanceView, self).get(request, *args, **kwargs)
-        except SessionToken.DoesNotExist:
-            print "token does not exist"
-            raise PermissionDenied({"message":"You don't have permission to access"})
-
-
 class CompanyListView(generics.ListCreateAPIView):
     """ Returns a list of serialized Company objects in JSON format.
     Allows:
