@@ -15,52 +15,17 @@ class SessionToken(models.Model):
 
 class Student(models.Model):
 
-    EXTRA_SMALL = 'XS'
-    SMALL = 'S'
-    MEDIUM = 'M'
-    LARGE = 'L'
-    EXTRA_LARGE = 'L'
-    SHIRT_SIZES = (
-        (EXTRA_SMALL, 'Extra Small'),
-        (SMALL, 'Small'),
-        (MEDIUM, 'Medium'),
-        (LARGE, 'Large'),
-        (EXTRA_LARGE, 'Extra Large'),
-    )
-
-    MALE = 'M'
-    FEMALE = 'F'
-    GENDERS = (
-        (MALE, 'Male'),
-        (FEMALE, 'Female'),
-    )
-
-    FRESHMAN = 'FR'
-    SOPHOMORE = 'SO'
-    JUNIOR = 'JR'
-    SENIOR = 'SR'
-    HIGH_SCHOOL = 'HS'
-    GRAD_STUDENT = 'GS'
-    GRADES = (
-        (FRESHMAN, 'Freshman'),
-        (SOPHOMORE, 'Sophomore'),
-        (JUNIOR, 'Junior'),
-        (SENIOR, 'Senior'),
-        (HIGH_SCHOOL, 'High School'),
-        (GRAD_STUDENT, 'Graduate Student')
-    )
-
     first_name = models.CharField('First Name', max_length=75)
     last_name = models.CharField('Last Name', max_length=100)
-    major = models.CharField('Major', max_length=50)
-    gender = models.CharField('Gender', max_length=1, choices=GENDERS)
+    major = models.CharField('Major', blank=True, max_length=50)
+    gender = models.CharField('Gender', blank=True, max_length=1)
     email = models.EmailField('Email', max_length=175)
     school = models.CharField('School', max_length=200)
-    grade = models.CharField('Grade', max_length=75, choices=GRADES)
+    grade = models.CharField('Grade', max_length=75)
     first_hackathon = models.BooleanField('First Hackathon')
-    github_handle = models.CharField('Github Handle', max_length=50)
-    linkedin_link = models.URLField('LinkedIn Link')
-    shirt_size = models.CharField('Shirt Size', max_length=3, choices=SHIRT_SIZES)
+    github_handle = models.CharField('Github Handle', max_length=50, blank=True, null=True)
+    linkedin_link = models.URLField('LinkedIn Link', blank=True, null=True)
+    shirt_size = models.CharField('Shirt Size', max_length=3)
     out_of_state = models.BooleanField('Out-of-State')
 
     class Meta:
