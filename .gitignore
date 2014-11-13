@@ -9,6 +9,9 @@ MountainHacks/*.pyc
 # JetBrains IDE files
 .idea/
 
+# Resume pdfs
+resumes/*.pdf
+
 # The database b/c too lazy to set up postgreSQL
 *.sqlite3
 
