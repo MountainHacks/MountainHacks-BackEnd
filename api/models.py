@@ -27,6 +27,7 @@ class Student(models.Model):
     linkedin_link = models.URLField('LinkedIn Link', blank=True, null=True)
     shirt_size = models.CharField('Shirt Size', max_length=3)
     out_of_state = models.BooleanField('Out-of-State')
+    resume = models.FileField(upload_to='resumes/', null=True)
 
     class Meta:
         verbose_name = 'Student'

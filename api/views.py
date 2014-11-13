@@ -10,6 +10,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 from api.tokens import TokenGenerator
 from rest_framework.exceptions import PermissionDenied
+from rest_framework import views
+from rest_framework.parsers import FileUploadParser
+from rest_framework.response import Response
 
 class StudentListView(generics.ListCreateAPIView):
     """ Returns a list of serialized Student objects in JSON format.
@@ -61,6 +64,16 @@ class CompanyInstanceView(generics.RetrieveUpdateDestroyAPIView):
 def get_token(request):
     return HttpResponse(TokenGenerator.get_token())
 
+@csrf_exempt
+class FileUploadView(views.APIView):
+    parser_classes = (FileUploadParser,)
+
+    def put(self, request, filename, format=None):
+        file_obj = request.FILES['file']
+        # ...
+        # do some staff with uploaded file
+        # ...
+        return Response(status=204)
 
 @csrf_exempt
 def registration_submission(request):
@@ -91,6 +104,7 @@ def registration_submission(request):
         github = post.get('github')
         linkedin = post.get('linkedin')
         first = post.get('first')
+        resume = request.FILES.get('resume')
 
         if out_of_state == "Yes":
             out_of_state = True
@@ -113,7 +127,8 @@ def registration_submission(request):
                           out_of_state=out_of_state,
                           github_handle=github,
                           linkedin_link=linkedin,
-                          first_hackathon=first)
+                          first_hackathon=first,
+                            resume=resume)
         student.save()
 
         message = "%s %s has registered for MountainHacks 2015!" % (first_name, last_name)
@@ -124,4 +139,4 @@ def registration_submission(request):
         complete_email.send()
         connection.close()
 
-        return HttpResponse(status=200)
+        return HttpResponse(status=201)
