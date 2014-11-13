@@ -46,4 +46,12 @@ class Company(models.Model):
     contact_email = models.EmailField('Contact Email', max_length=150)
     contact_name = models.CharField('Contact Name', max_length=150)
 
+    class Meta:
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
+        ordering = ['id']
+
+    def __unicode__(self):
+        return self.name
+
 
