@@ -13,6 +13,15 @@ class SessionToken(models.Model):
 
     val = models.CharField('Value', max_length=100)
 
+    class Meta:
+        verbose_name = "Session Token"
+        verbose_name_plural = "Session Tokens"
+        ordering = ['id']
+        unique_together = ("val"    ,)
+
+    def __unicode__(self):
+        return self.val
+
 class Student(models.Model):
 
     first_name = models.CharField('First Name', max_length=75)
@@ -28,6 +37,13 @@ class Student(models.Model):
     shirt_size = models.CharField('Shirt Size', max_length=3)
     out_of_state = models.BooleanField('Out-of-State')
     resume = models.FileField(upload_to='resumes/', null=True)
+    registration_date = models.DateTimeField('Registration Date', auto_now=True, null=True, blank=True)
+    is_confirmed = models.BooleanField("Is Confirmed", default=False)
+    confirmation_code = models.CharField("Confirmation Code", max_length=100, null=True, blank=True)
+
+    def delete(self, using=None):
+        self.resume.delete()
+        super(Student, self).delete(using)
 
     class Meta:
         verbose_name = 'Student'

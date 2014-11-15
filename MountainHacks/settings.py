@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,7 +69,7 @@ DATABASES = {
      }
  }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
@@ -84,6 +83,9 @@ USE_TZ = True
 
 STATIC_ROOT = '/home/darguetap/webapps/mountainhacks_static/'
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = "resumes/"
+MEDIA_URL = "/resumes/"
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

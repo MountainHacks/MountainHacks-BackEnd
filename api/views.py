@@ -64,16 +64,23 @@ class CompanyInstanceView(generics.RetrieveUpdateDestroyAPIView):
 def get_token(request):
     return HttpResponse(TokenGenerator.get_token())
 
-@csrf_exempt
-class FileUploadView(views.APIView):
-    parser_classes = (FileUploadParser,)
+def confirmAttendee(request):
+    """ Accepts a parameter called 'code', representing a unique confirmation code. It is used to look up a student. If
+        we get a student back, then it is a good confirmation code. We then set the student's is_confirmed bit to true
+    """
 
-    def put(self, request, filename, format=None):
-        file_obj = request.FILES['file']
-        # ...
-        # do some staff with uploaded file
-        # ...
-        return Response(status=204)
+    confirmation_code = request.GET.get("code")
+    if not confirmation_code:
+        return HttpResponse(status=404)
+
+    print confirmation_code
+    try:
+        student = Student.objects.get(confirmation_code=confirmation_code)
+        student.is_confirmed = True
+        student.save()
+        return HttpResponse(status=200)
+    except Student.DoesNotExist:
+        return HttpResponse(status=403)
 
 @csrf_exempt
 def registration_submission(request):
@@ -128,13 +135,16 @@ def registration_submission(request):
                           github_handle=github,
                           linkedin_link=linkedin,
                           first_hackathon=first,
-                            resume=resume)
+                          resume=resume,
+                          confirmation_code=TokenGenerator.get_confirmation_code())
         student.save()
 
         message = "%s %s has registered for MountainHacks 2015!" % (first_name, last_name)
         subject = "New Registrant!"
         connection = mail.get_connection()
         connection.open()
+        confirm_email = mail.EmailMessage("MountainHacks 2015 Confirmation", "Thanks for registering! Please confirm this email by clicking on the following link: http://www.mountainhacks.com/api/confirm?code="+student.confirmation_code, "mountainhacks@gmail.com", [email], connection=connection)
+        confirm_email.send()
         complete_email = mail.EmailMessage(subject, message, email, ["mountainhacks@gmail.com"], connection=connection)
         complete_email.send()
         connection.close()
