@@ -5,14 +5,12 @@ from api.models import Student, Company, SessionToken
 from api.serializers import StudentSerializer, CompanySerializer
 
 from django.http import HttpResponse
-from django.core import mail
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 from api.tokens import TokenGenerator
 from rest_framework.exceptions import PermissionDenied
-from rest_framework import views
-from rest_framework.parsers import FileUploadParser
-from rest_framework.response import Response
+from django.core.mail import send_mass_mail
 
 class StudentListView(generics.ListCreateAPIView):
     """ Returns a list of serialized Student objects in JSON format.
@@ -78,7 +76,7 @@ def confirmAttendee(request):
         student = Student.objects.get(confirmation_code=confirmation_code)
         student.is_confirmed = True
         student.save()
-        return HttpResponse(status=200)
+        return redirect("http://www.mountainhacks.com/thanks.html")
     except Student.DoesNotExist:
         return HttpResponse(status=403)
 
@@ -141,12 +139,8 @@ def registration_submission(request):
 
         message = "%s %s has registered for MountainHacks 2015!" % (first_name, last_name)
         subject = "New Registrant!"
-        connection = mail.get_connection()
-        connection.open()
-        confirm_email = mail.EmailMessage("MountainHacks 2015 Confirmation", "Thanks for registering! Please confirm this email by clicking on the following link: http://www.mountainhacks.com/api/confirm?code="+student.confirmation_code, "mountainhacks@gmail.com", [email], connection=connection)
-        confirm_email.send()
-        complete_email = mail.EmailMessage(subject, message, email, ["mountainhacks@gmail.com"], connection=connection)
-        complete_email.send()
-        connection.close()
+        message1 = (subject, message, "mountainhacks@gmail.com", ["mountainhacks@gmail.com",])
+        message2 = ("MountainHacks 2015 Confirmation", "Thanks for registering! Please confirm this email by clicking on the following link: http://www.mountainhacks.com/api/confirm?code="+student.confirmation_code, "mountainhacks@gmail.com", [email,])
+        send_mass_mail((message1, message2), fail_silently=False)
 
         return HttpResponse(status=201)
