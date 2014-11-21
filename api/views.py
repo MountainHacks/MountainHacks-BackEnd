@@ -140,7 +140,7 @@ def registration_submission(request):
         message = "%s %s has registered for MountainHacks 2015!" % (first_name, last_name)
         subject = "New Registrant!"
         message1 = (subject, message, "mountainhacks@gmail.com", ["mountainhacks@gmail.com",])
-        message2 = ("MountainHacks 2015 Confirmation", "Thanks for registering! Please confirm this email by clicking on the following link: http://www.mountainhacks.com/api/confirm?code="+student.confirmation_code, "mountainhacks@gmail.com", [email,])
+        message2 = ("MountainHacks 2015 Confirmation", "Thanks for registering! Please confirm this email by clicking on the following link: http://api.mountainhacks.com/api/confirm?code="+student.confirmation_code, "mountainhacks@gmail.com", [email,])
         send_mass_mail((message1, message2), fail_silently=False)
 
         return HttpResponse(status=201)
