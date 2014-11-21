@@ -6,6 +6,8 @@ from MountainHacks import secrets
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+
 SECRET_KEY = secrets.SECRET_KEY
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -58,6 +60,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
 ROOT_URLCONF = 'MountainHacks.urls'
 
 WSGI_APPLICATION = 'MountainHacks.wsgi.application'
@@ -86,6 +93,10 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = ""
 MEDIA_URL = "/"
+
+TEMPLATE_DIRS  = (
+    PROJECT_PATH + "/templates/"
+)
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
