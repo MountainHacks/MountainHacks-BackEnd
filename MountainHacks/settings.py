@@ -84,8 +84,8 @@ USE_TZ = True
 STATIC_ROOT = '/home/darguetap/webapps/mountainhacks_static/'
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = "resumes/"
-MEDIA_URL = "/resumes/"
+MEDIA_ROOT = ""
+MEDIA_URL = "/"
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

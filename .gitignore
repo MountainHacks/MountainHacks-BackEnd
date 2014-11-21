@@ -10,7 +10,7 @@ MountainHacks/*.pyc
 .idea/
 
 # Resume pdfs
-resumes/*.pdf
+resumes/*.*
 
 # The database b/c too lazy to set up postgreSQL
 *.sqlite3
